@@ -1,0 +1,34 @@
+		Выбор уникальных элементов столбца:
+SELECT DISTINCT amount FROM book;
+		Выборка данных, групповые функции SUM и COUNT:
+SELECT author AS 'Автор', COUNT(title) AS 'Различных_книг', SUM(amount) AS 'Количество_экземпляров'
+FROM book
+GROUP BY author;
+		Выборка данных, групповые функции MIN, MAX и AVG:
+SELECT author, MIN(price) AS 'Минимальная_цена', MAX(price) AS 'Максимальная_цена', AVG(price) AS 'Средняя_цена'
+FROM book
+GROUP BY author;
+		Выборка данных по условию, групповые функции:
+SELECT author,
+    MIN(price) AS Минимальная_цена, 
+    MAX(price) AS Максимальная_цена
+FROM book
+GROUP BY author
+HAVING SUM(price * amount) > 5000 
+ORDER BY Минимальная_цена DESC;
+		Выборка данных по условию, групповые функции, WHERE и HAVING:
+WHERE и HAVING могут использоваться в одном запросе. 
+При этом необходимо учитывать порядок выполнения  SQL запроса на выборку на СЕРВЕРЕ:
+1. FROM
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. ORDER BY
+
+SELECT author, SUM(price*amount) AS Стоимость
+FROM book
+WHERE title <> 'Идиот' AND title <>'Белая гвардия'
+GROUP BY author
+HAVING SUM(price*amount) > 5000
+ORDER BY Стоимость DESC;
